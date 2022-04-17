@@ -1,14 +1,21 @@
-487
-'a'
--5
-7
-val
-'jirgort'
-4.6
-&
-?
--1.5
-'#*1@'
-'*#06#'
-'k123'
-12345
+int miFunc (int dif, char otra){				
+	int a#			
+	string str ='jirgort mccarty' #			
+	/*int var = 34 + id * miFunc2 (func3(34,id))#			
+	if ((var+23) > 45 & true | otra == dif){*/			
+		miV = (var+23) > 45 & true | otra == otrFunc() #		
+		switch (miV){		
+			case 1:	
+				print('1')#
+				break#
+			case 2:	
+				miV = miV--#
+			default:	
+				miV = miV-- * miV+1#
+		}		
+	}			
+	while(!(true == (asd>12) & ((34+34)>12))){			
+		print()#		
+	}			
+	miV = 45 & var # //error semantico no permitido			
+}				

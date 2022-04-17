@@ -17,5 +17,9 @@
         return "Lexema: "+ this.lexemal + "  Token: " +"["+ this.tokent+"]" + " Tabla de simbolos: "+ this.arbola ;
     }
    }
+
+
+			
+
     
 

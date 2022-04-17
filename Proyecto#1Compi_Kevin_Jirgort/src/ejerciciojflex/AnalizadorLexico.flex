@@ -30,29 +30,46 @@
  
 /* Inicio de Expresiones regulares */
 
-letra=[A-Z a-z]
+boolean= "true"| "false"
+tipo = "int"| "string" | "boolean" | "float"|"char"|"double"
+estruControl="if"|"else"|"switch"|"return"|"break"|"case"|"while"|"default"|"print"
+Asig="="
+letra=[A-Za-z]
+nulo="null"
 digR=[1-9]
 dig=[0-9]
-id= {letra} ({letra}|{digR})*
-simb = "#" | "?" |"!"|"$"|"~"|"@"|";"|":"
+comillaA='
+comillaC='
+string= {comillaA}({letra}|{dig}|{simb}|{operadores}|{ExprLogicas}|{comparadores}|{Separadores}|{ExprFinal}) ({letra} | {dig}| {simb}|{operadores}|{ExprLogicas}|{comparadores}|{Separadores}|{ExprFinal}|{Espacio} )*{comillaC} 
+simb = "?" |"$"|"~"|"@"|";"|":"|"%"|"$"|"%"
+
+Espacio = " "|"	"
+id= {letra}({letra}|{digR})*
+
 operadores="*"|"+"|"-"|"/"
-cero=0
+ExprLogicas="|"|"&"|"!"
+comparadores=">"|"<"|"=="|">="|"<="|"!="
+ExprFinal="#"
+Separadores=")"|"("|"}"|"{"|"["|"]"|","|":"
 sigN="-"
+
 punto="."
 flotante=({sigN} {dig}*|({dig} {dig}*)) {punto}{dig}+
 entero= {sigN} {dig}* |({digR} {dig}*)
 
+Comentario = "//" ({id}{Espacio})*(\r|\n|\r\n)?
+
+ComentarioMultilinea="/*" [^*] ~"*/" 
 
 
-comillaA='
-comillaC='
+
 char= {comillaA} {letra} {comillaC}
 
-string= {comillaA}({letra}|{simb}) ({letra} | {dig}| {simb} )*{comillaC} 
-boolean= "True"| "False"
+
+
  
 
- Espacio = " "
+
  SaltoDeLinea = \n|\r|\r\n
  
 /* Fin de expresiones regulares */
@@ -60,9 +77,60 @@ boolean= "True"| "False"
 %%
  
 /* Reglas */
+{Comentario} {
  
+}
+{ComentarioMultilinea} {
+ 
+}
+{tipo} {
+ TokenP t = new TokenP(yytext(),yytext(), "TIPO_DATO");
+ this._existenTokens = true;
+ return t;
+}
+{estruControl} {
+ TokenP t = new TokenP(yytext(),yytext(), "ESTRUCTURA_CONTROL");
+ this._existenTokens = true;
+ return t;
+}
+{Asig} {
+ TokenP t = new TokenP(yytext(),yytext(), "ASIGNACION");
+ this._existenTokens = true;
+ return t;
+}
+{nulo} {
+ TokenP t = new TokenP(yytext(),yytext(), "NULO");
+ this._existenTokens = true;
+ return t;
+}
+{ExprFinal} {
+ TokenP t = new TokenP(yytext(),yytext(), "FINAL_EXPRESION");
+ this._existenTokens = true;
+ return t;
+}
 
+{Separadores} {
+ TokenP t = new TokenP(yytext(),yytext(), "SEPARADOR");
+ this._existenTokens = true;
+ return t;
+}
 
+{ExprLogicas} {
+ TokenP t = new TokenP(yytext(),yytext(), "EXPRESION_LOGICA");
+ this._existenTokens = true;
+ return t;
+}
+
+{comparadores} {
+ TokenP t = new TokenP(yytext(),yytext(), "COMPARADOR");
+ this._existenTokens = true;
+ return t;
+}
+{boolean} {
+ TokenP t = new TokenP(yytext(),yytext(), "BOOLEAN");
+ this._existenTokens = true;
+ return t;
+}
 
 {flotante} {
  TokenP t = new TokenP(yytext(),yytext(), "FLOTANTE");
@@ -74,6 +142,15 @@ boolean= "True"| "False"
  this._existenTokens = true;
  return t;
 }
+
+{string} {
+ TokenP t = new TokenP(yytext(),yytext(), "STRING");
+ this._existenTokens = true;
+ return t;
+}
+{Espacio} {
+ 
+}
 {id} {
  TokenP t = new TokenP(yytext(),yytext(), "IDENTIFICADOR");
  this._existenTokens = true;
@@ -84,11 +161,7 @@ boolean= "True"| "False"
  this._existenTokens = true;
  return t;
 }
-{string} {
- TokenP t = new TokenP(yytext(),yytext(), "String");
- this._existenTokens = true;
- return t;
-}
+
 
 {operadores} {
  TokenP t = new TokenP(yytext(),yytext(), "OPERADOR");
@@ -96,9 +169,7 @@ boolean= "True"| "False"
  return t;
 }
 
-{Espacio} {
- // Ignorar cuando se ingrese un espacio
-}
+
  
 {SaltoDeLinea} {
  TokenP t = new TokenP("Enter","Enter", "NUEVA_LINEA");
