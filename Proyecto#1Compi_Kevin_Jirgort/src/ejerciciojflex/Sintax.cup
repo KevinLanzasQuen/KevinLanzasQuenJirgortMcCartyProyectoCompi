@@ -1,0 +1,26 @@
+package ejerciciojflex;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Tipo,Nulo,Flotante,ExprLogica,Boolean,Asig,Separador,ExprFinal,Comparador,String,EstruControl,Entero,Operador,Id,Char, ERROR;
+non terminal INICIO, SENTENCIA; 
+
+start with INICIO;
+
+INICIO ::= Tipo 
+;
+SENTENCIA::= Tipo | Tipo
+;

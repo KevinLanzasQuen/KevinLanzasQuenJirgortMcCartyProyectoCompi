@@ -1,3 +1,5 @@
+package ejerciciojflex;
+
 
    public class TokenP{
         String tokent;

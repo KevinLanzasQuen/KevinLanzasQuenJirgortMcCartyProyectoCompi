@@ -1,6 +1,9 @@
+package ejerciciojflex;
+import ejerciciojflex.TokenP;
 %%
 %public
 %class AnalizadorLexico
+%type TokenP
 %line
 %char
 %column
@@ -32,7 +35,7 @@
 
 boolean= "true"| "false"
 tipo = "int"| "string" | "boolean" | "float"|"char"|"double"
-estruControl="if"|"else"|"switch"|"return"|"break"|"case"|"while"|"default"|"print"
+estruControl="if"|"else"|"switch"|"return"|"break"|"case"|"while"|"default"|"print"|"for"
 Asig="="
 letra=[A-Za-z]
 nulo="null"

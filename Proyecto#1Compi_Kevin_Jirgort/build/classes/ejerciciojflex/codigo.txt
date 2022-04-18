@@ -1,5 +1,5 @@
 int miFunc (int dif, char otra){				
-	int a#			
+	int a$#			
 	string str ='jirgort mccarty' #			
 	/*int var = 34 + id * miFunc2 (func3(34,id))#			
 	if ((var+23) > 45 & true | otra == dif){*/			
