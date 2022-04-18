@@ -15,12 +15,12 @@ parser code
 }
 :};
 
-terminal Tipo,Nulo,Flotante,ExprLogica,Boolean,Asig,Separador,ExprFinal,Comparador,String,EstruControl,Entero,Operador,Id,Char, ERROR;
+terminal Tipo,Nulo,Flotante,ExprLogica,Boolean,Asig,Separador,ExprFinal,Comparador,Cadena,EstruControl,Entero,Operador,Id,Char,Int,String,If,Else,While,For,Switch,Return,Break,Case,Default,Print,Multiplicacion,Suma,Resta,Division,ParentesisC,ParentesisA,LlaveC,LlaveA,CorcheteA,CorcheteC,Coma,DosPuntos,ERROR;
 non terminal INICIO, SENTENCIA; 
 
 start with INICIO;
 
-INICIO ::= Tipo 
+INICIO ::= Comparador 
 ;
-SENTENCIA::= Tipo | Tipo
+SENTENCIA::= Comparador | Comparador
 ;

@@ -16,16 +16,17 @@ import java.nio.file.Paths;
 public class PruebaJflex {
  
   public static void main(String[] args) throws Exception {
-      String ruta="C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/AnalizadorLexico.flex";
-      String ruta1="C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/AnalizadorLexicoCup.flex";
       
-      String[] ruta2={"-parser","Sintax","C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.cup"};
+      String ruta="C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/AnalizadorLexico.flex";
+      String ruta1="C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/AnalizadorLexicoCup.flex";
+      
+      String[] ruta2={"-parser","Sintax","C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.cup"};
       
       generarLexer(ruta,ruta1, ruta2);
       
       
   try{
-  String archivo = "C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/codigo.txt";
+  String archivo = "C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/codigo.txt";
   BufferedReader buffer = new BufferedReader(new FileReader(archivo));
   AnalizadorLexico analizadorJFlex = new AnalizadorLexico(buffer);
   
@@ -49,7 +50,7 @@ public class PruebaJflex {
   
   if (!analizadorJFlex.existenTokens())
    break;
-  File archivoN=new File("C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/tokens.txt");
+  File archivoN=new File("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/tokens.txt");
   FileWriter escribir=new FileWriter(archivoN,true);
   if(token.arbola =="ENTERO"){
       escribir.write("["+token.arbola +", "+ String.valueOf(identificadorEntero)+"], "+token.lexemal);
@@ -151,24 +152,24 @@ public class PruebaJflex {
      JFlex.Main.generate(new File(ruta1));
      java_cup.Main.main(ruta2);
      
-     Path rutaSym = Paths.get("C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/sym.java");
+     Path rutaSym = Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/sym.java");
         if (Files.exists(rutaSym)) {
             Files.delete(rutaSym);
              
         }
         Files.move(
-                Paths.get("C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/sym.java"), 
-                Paths.get("C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/sym.java")
+                Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/sym.java"), 
+                Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/sym.java")
         );
         System.out.println("NOOO");
-        Path rutaSin = Paths.get("C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.java");
+        Path rutaSin = Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.java");
         if (Files.exists(rutaSin)) {
             Files.delete(rutaSin);
         }
         
         Files.move(
-                Paths.get("C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/Sintax.java"), 
-                Paths.get("C:/Users/Andrey McCarty/Desktop/Nueva carpeta (2)/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.java")
+                Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/Sintax.java"), 
+                Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.java")
         );
   }
   
