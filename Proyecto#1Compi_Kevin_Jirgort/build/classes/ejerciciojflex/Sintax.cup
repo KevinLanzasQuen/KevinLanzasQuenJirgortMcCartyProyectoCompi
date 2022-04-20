@@ -15,12 +15,33 @@ parser code
 }
 :};
 
-terminal Tipo,Nulo,Flotante,ExprLogica,Boolean,Asig,Separador,ExprFinal,Comparador,Cadena,EstruControl,Entero,Operador,Id,Char,Int,String,If,Else,While,For,Switch,Return,Break,Case,Default,Print,Multiplicacion,Suma,Resta,Division,ParentesisC,ParentesisA,LlaveC,LlaveA,CorcheteA,CorcheteC,Coma,DosPuntos,ERROR;
-non terminal INICIO, SENTENCIA; 
+terminal Tipo,Nulo,Flotante,ExprLogica,Boolean,Asig,Separador,ExprFinal,Comillas,
+Comparador,Cadena,EstruControl,Entero,Operador,Id,Char,Int,String,If,Else,DecInc,
+While,For,Switch,Return,Break,Case,Default,Print,Multiplicacion,Suma,Resta,Parametros,
+Division,ParentesisC,ParentesisA,LlaveC,LlaveA,main,CorcheteA,CorcheteC,Coma,DosPuntos,
+ERROR;
+non terminal INICIO, SENTENCIA,DECLARACION,IF,SENTENCIA_BOOL,
+            WHILE,IF_ELSE,FOR,SENTENCIA_FOR,DECLARACION_FOR; 
 
 start with INICIO;
 
-INICIO ::= Comparador 
+INICIO ::= Int main ParentesisA ParentesisC LlaveA SENTENCIA LlaveC
 ;
-SENTENCIA::= Comparador | Comparador
+SENTENCIA::=DECLARACION|SENTENCIA DECLARACION |IF| SENTENCIA IF|SENTENCIA WHILE|SENTENCIA IF_ELSE|IF_ELSE|WHILE|SENTENCIA FOR|FOR
+;
+DECLARACION::= Tipo Id ExprFinal|Tipo Id Asig ExprFinal| Int Id ExprFinal|Cadena Id Asig Comillas Comillas ExprFinal|Id ParentesisA Parametros ParentesisC ExprFinal|Id
+;
+IF::= If ParentesisA SENTENCIA_BOOL ParentesisC LlaveA SENTENCIA LlaveC
+;
+SENTENCIA_BOOL::= Boolean| Id Comparador Boolean| Id Comparador Entero| Id Comparador Comillas Id Comillas
+;
+IF_ELSE::= If ParentesisA SENTENCIA_BOOL ParentesisC LlaveA SENTENCIA LlaveC Else LlaveA SENTENCIA LlaveC
+;
+WHILE::= While ParentesisA SENTENCIA_BOOL ParentesisC LlaveA SENTENCIA LlaveC
+;
+FOR::= For ParentesisA SENTENCIA_FOR ParentesisC LlaveA SENTENCIA LlaveC
+;
+SENTENCIA_FOR::= Tipo Id Asig Entero ExprFinal SENTENCIA_BOOL ExprFinal DECLARACION_FOR| Id Asig Entero ExprFinal SENTENCIA_BOOL ExprFinal DECLARACION_FOR
+;
+DECLARACION_FOR::= Id DecInc | DecInc Id
 ;

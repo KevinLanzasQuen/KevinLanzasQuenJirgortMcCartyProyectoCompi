@@ -5,31 +5,27 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java_cup.runtime.Symbol;
 
 /**
  *
- * @author Andrey McCarty
+ * @author Andrey McCarty, Kevin Lanzas Quen
  */
 public class PruebaJflex {
  
   public static void main(String[] args) throws Exception {
-      
       String ruta="C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/AnalizadorLexico.flex";
       String ruta1="C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/AnalizadorLexicoCup.flex";
-      
       String[] ruta2={"-parser","Sintax","C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.cup"};
-      
       generarLexer(ruta,ruta1, ruta2);
-      
-      
   try{
   String archivo = "C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/codigo.txt";
   BufferedReader buffer = new BufferedReader(new FileReader(archivo));
   AnalizadorLexico analizadorJFlex = new AnalizadorLexico(buffer);
-  
   int identificadorChar = 1;
   int identificadorString = 1;
   int identificadorEntero = 1;
@@ -47,7 +43,6 @@ public class PruebaJflex {
   int identificadorEstC= 1;
   while(true){
   TokenP token = analizadorJFlex.yylex();
-  
   if (!analizadorJFlex.existenTokens())
    break;
   File archivoN=new File("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/tokens.txt");
@@ -134,44 +129,52 @@ public class PruebaJflex {
       }
   }
       
-  System.out.println(token);
+ 
   escribir.write("\r\n");
   escribir.close();
- 
-  
  }
  }
  catch (Exception e){
    System.out.println(e.toString());
  }
  }
+  /**
+ *
+ * @author Andrey McCarty, Kevin Lanzas Quen
+ * Entradas: String ruta,String ruta1,String[] ruta2
+ * Salida: Se encarga de generar los diversos archivos en la direccion indicada
+ * Restricciones: Las rutas que se mandan por parametro deben ser rutas existentes.
+ */
   public static void generarLexer(String ruta,String ruta1, String[] ruta2) throws IOException, Exception{
-     
-     
      JFlex.Main.generate(new File(ruta));
      JFlex.Main.generate(new File(ruta1));
      java_cup.Main.main(ruta2);
-     
      Path rutaSym = Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/sym.java");
         if (Files.exists(rutaSym)) {
-            Files.delete(rutaSym);
-             
+            Files.delete(rutaSym); 
         }
         Files.move(
                 Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/sym.java"), 
                 Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/sym.java")
         );
-        System.out.println("NOOO");
         Path rutaSin = Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.java");
         if (Files.exists(rutaSin)) {
             Files.delete(rutaSin);
         }
-        
         Files.move(
                 Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/Sintax.java"), 
                 Paths.get("C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/Sintax.java")
         );
+        String archivo = "C:/Users/kevin/OneDrive/Desktop/ProyectoCompi/KevinLanzasQuenJirgortMcCartyProyectoCompi/Proyecto#1Compi_Kevin_Jirgort/src/ejerciciojflex/codigo.txt";
+        FileReader fl=new FileReader(archivo);
+        BufferedReader buffer = new BufferedReader(new FileReader(archivo));
+        Sintax s = new Sintax(new ejerciciojflex.AnalizadorLexicoCup(buffer));
+        try {
+            s.parse();
+            System.out.println("Analisis realizado correctamente");
+        } catch (Exception ex) {
+            Symbol sym = s.getS();
+            System.out.println("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
+        }
   }
-  
-  
 }

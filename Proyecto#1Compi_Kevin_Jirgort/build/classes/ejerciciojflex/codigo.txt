@@ -1,3 +1,12 @@
+int main (){
+	miFunct (hola, 'a') #			
+	int arr[10]#			
+	arr[0] = 12 +56#			
+	arr[1] = null#			
+	float miFloat = arr[5] - -67.5 * 5.5 #			
+}				
+
+
 int miFunc (int dif, char otra){				
 	int a$#			
 	string str ='jirgort mccarty' #			
@@ -19,3 +28,8 @@ int miFunc (int dif, char otra){
 	}			
 	miV = 45 & var # //error semantico no permitido			
 }				
+Tipo,Nulo,Flotante,ExprLogica,Boolean,Asig,Separador,ExprFinal,Comillas,
+Comparador,Cadena,EstruControl,Entero,Operador,Id,Char,Int,String,If,Else,DecInc,
+While,For,Switch,Return,Break,Case,Default,Print,Multiplicacion,Suma,Resta,
+Division,ParentesisC,ParentesisA,LlaveC,LlaveA,main,CorcheteA,CorcheteC,Coma,DosPuntos,
+ERROR

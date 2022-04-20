@@ -129,7 +129,7 @@ char= {comillaA} {letra} {comillaC}
  this._existenTokens = true;
  return t;
 }
-{boolean} {
+{boolean}* {
  TokenP t = new TokenP(yytext(),yytext(), "BOOLEAN");
  this._existenTokens = true;
  return t;
@@ -159,7 +159,7 @@ char= {comillaA} {letra} {comillaC}
  this._existenTokens = true;
  return t;
 }
-{char} {
+{char}* {
  TokenP t = new TokenP(yytext(),yytext(), "CHAR");
  this._existenTokens = true;
  return t;

@@ -7,31 +7,41 @@ import java_cup.runtime.Symbol;
 %full
 %line
 %char
-boolean= "true"| "false"
+
+boolean= "true" | "false"
 tipo = "boolean" | "float"|"char"|"double"
 Asig="="
-letra=[A-Za-z]
+Letra=[a-zA-Z]
 nulo="null"
-digR=[1-9]
-dig=[0-9]
+DigR=[1-9]
+Dig=[0-9]
+L=[a-zA-Z_]+
+D=[0-9]+
+
 comillaA='
 comillaC='
-string= {comillaA}({letra}|{dig}|{simb}|{operadores}|{ExprLogicas}|{comparadores}|{Separadores}|{ExprFinal}) ({letra} | {dig}| {simb}|{operadores}|{ExprLogicas}|{comparadores}|{Separadores}|{ExprFinal}|{Espacio} )*{comillaC} 
+comillas="\""
+String= ({comillaA}({Letra}|{Dig}|{simb}|{operadores}|{ExprLogicas}|{comparadores}|{Separadores}|{ExprFinal}) ({Letra} | {Dig}| {simb}|{operadores}|{ExprLogicas}|{comparadores}|{Separadores}|{ExprFinal}|{Espacio} )*{comillaC}) 
+
 operadores="*"|"+"|"-"|"/"
 Separadores=")"|"("|"}"|"{"|"["|"]"|","|":"
 simb = "?" |"$"|"~"|"@"|";"|":"|"%"|"$"|"%"
 Espacio = " "|"	"
-id= {letra}({letra}|{digR})*
+Id = {Letra}({Letra}|{Dig})*
 ExprLogicas="|"|"&"|"!"
 comparadores=">"|"<"|"=="|">="|"<="|"!="
 ExprFinal="#"
 sigN="-"
 punto="."
-flotante=({sigN} {dig}*|({dig} {dig}*)) {punto}{dig}+
-entero= {sigN} {dig}* |({digR} {dig}*)
-Comentario = "//" ({id}{Espacio})*(\r|\n|\r\n)?
+flotante=({sigN} {Dig}*|({Dig} {Dig}*)) {punto}{Dig}+
+Entero= {sigN} {Dig}* |({DigR} {Dig}*)
+Comentario = "//" ({Id}{Espacio})*(\r|\n|\r\n)?
 ComentarioMultilinea="/*" [^*] ~"*/" 
-char= {comillaA} {letra} {comillaC}
+char= {comillaA} {Letra} {comillaC}
+ParentesisAb="("
+ParentesisCe=")"
+Coma=","
+Parametros= ({Id}|{Entero}|{char}|{flotante}|{String}|{boolean}) ((coma({Id}|{Entero}|{char}|{flotante}|{String}|{boolean}))*)?
 SaltoDeLinea = \n|\r|\r\n
 
 %{
@@ -104,6 +114,9 @@ SaltoDeLinea = \n|\r|\r\n
 
 (":") {return new Symbol(sym.DosPuntos, yychar, yyline, yytext());}
 
+("++"|"--") {return new Symbol(sym.DecInc, yychar, yyline, yytext());}
+
+("main") {return new Symbol(sym.main, yychar, yyline, yytext());}
 {Asig} {
  return new Symbol(sym.Asig, yychar, yyline, yytext());
 }
@@ -114,7 +127,11 @@ SaltoDeLinea = \n|\r|\r\n
  return new Symbol(sym.ExprFinal, yychar, yyline, yytext());
 }
 
-{char} {
+{Parametros} {
+ return new Symbol(sym.Parametros, yychar, yyline, yytext());
+}
+
+{char}* {
     return new Symbol(sym.Char, yychar, yyline, yytext());
 }
 
@@ -125,26 +142,28 @@ SaltoDeLinea = \n|\r|\r\n
 {comparadores} {
   return new Symbol(sym.Comparador, yychar, yyline, yytext());
 }
-{boolean} {
+{boolean}* {
  return new Symbol(sym.Boolean, yychar, yyline, yytext());
 }
 
-{flotante} {
+{flotante}* {
  return new Symbol(sym.Flotante, yychar, yyline, yytext());
 }
-{entero} {
+{Entero}* {
  return new Symbol(sym.Entero, yychar, yyline, yytext());
 }
 
-{string} {
+{String}* {
  return new Symbol(sym.Cadena, yychar, yyline, yytext());
+}
+{comillas} {
+ return new Symbol(sym.Comillas, yychar, yyline, yytext());
 }
 {Espacio} {
  /*Ignore*/
 }
-{id} {
- return new Symbol(sym.Id, yychar, yyline, yytext());
-}
+
+{L}({L}|{D})* {return new Symbol(sym.Id, yychar, yyline, yytext());}
 {SaltoDeLinea} {
  /*Ignore*/
 }
